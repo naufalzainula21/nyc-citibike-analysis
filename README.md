@@ -138,9 +138,9 @@ jupyter notebook notebooks/
 ## 📧 Contact
 
 For questions or collaboration:
-- **Email:** your.email@example.com
-- **LinkedIn:** [Your Profile](https://linkedin.com/in/yourprofile)
-- **Portfolio:** [Your Website](https://yourwebsite.com)
+- **Email:** naufalzainula21@gmail.com
+- **LinkedIn:** www.linkedin.com/in/naufal-zainul-arifin/
+- **Portfolio:** https://naufalzainula21.github.io/
 
 ## 📜 License
 
