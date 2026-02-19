@@ -10,11 +10,11 @@ This project analyzes bike-sharing usage patterns in New York City using Citi Bi
 - Map station-level activity and accessibility
 - Provide insights for urban mobility planning
 
-## 📊 Datasets
+## 📊 Dataset
 
-- **Source:** Citi Bike System Data (February-April 2024)
-- **Coverage:** NYC bike-sharing trips with ~400k+ records
-- **Variables:** Trip duration, start/end times, station locations, user types
+- **Source**: [NYC Citi Bike System Data](https://citibikenyc.com/system-data)
+- **Period**: February 2024
+- **Size**: 2,118,148 trips across 2,138 stations
 
 ## 🛠️ Technologies & Tools
 
