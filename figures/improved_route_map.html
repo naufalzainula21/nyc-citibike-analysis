@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a3ab794bece454abdde469bff6f2d8c3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; 
+            top: 10px; right: 10px; width: 250px; height: auto; 
+            background-color: white; z-index:9999; font-size:14px;
+            border:2px solid grey; border-radius: 5px; padding: 10px">
+
+<h4 style="margin-top:0;">Top 30 Routes</h4>
+
+<p style="margin: 5px 0;">
+    <span style="display:inline-block; width:30px; height:6px; 
+          background-color:#d7191c;"></span>
+    <b>Very Popular</b> (Top 25%)<br>
+    <span style="margin-left: 35px; font-size: 12px;">
+        > 340 trips
+    </span>
+</p>
+
+<p style="margin: 5px 0;">
+    <span style="display:inline-block; width:30px; height:4px; 
+          background-color:#fdae61;"></span>
+    <b>Popular</b> (50-75%)<br>
+    <span style="margin-left: 35px; font-size: 12px;">
+        286 - 340 trips
+    </span>
+</p>
+
+<p style="margin: 5px 0;">
+    <span style="display:inline-block; width:30px; height:3px; 
+          background-color:#abd9e9;"></span>
+    <b>Moderate</b> (Bottom 50%)<br>
+    <span style="margin-left: 35px; font-size: 12px;">
+        < 286 trips
+    </span>
+</p>
+
+<hr style="margin: 10px 0;">
+
+<p style="margin: 5px 0;">
+    <i class="fa fa-circle" style="color:lightgreen"></i> Start Point<br>
+    <i class="fa fa-circle" style="color:red"></i> End Point
+</p>
+
+<hr style="margin: 10px 0;">
+
+<p style="font-size: 12px;">
+    <b>Busiest Route:</b><br>
+    1 Ave & E 62 St... →<br>
+    1 Ave & E 68 St...<br>
+    (457 trips)
+</p>
+
+</div>
+    
+<div style="position: fixed; 
+            top: 10px; left: 50px; width: 350px; height: 60px; 
+            background-color: white; z-index:9999; font-size:18px;
+            border:2px solid grey; border-radius: 5px; padding: 10px">
+<h3 style="margin:0;">Most Popular Bike Routes</h3>
+<p style="margin:5px 0; font-size:14px;">Top 30 Origin-Destination Pairs</p>
+</div>
+    
+            <div class="folium-map" id="map_a3ab794bece454abdde469bff6f2d8c3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a3ab794bece454abdde469bff6f2d8c3 = L.map(
+                "map_a3ab794bece454abdde469bff6f2d8c3",
+                {
+                    center: [40.73856474372529, -73.97242214670489],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b24fbe16ba01eeb2330e13471be17430 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b24fbe16ba01eeb2330e13471be17430.addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+            var poly_line_6f027015c842922c4b1d8f1a8eeac44f = L.polyline(
+                [[40.7612274, -73.96094022], [40.76500525, -73.95818491]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_2aba468a5add3689452609531832ba42 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ab3dbca0d601f9f381ca2d2b2dd82417 = $(`<div id="html_ab3dbca0d601f9f381ca2d2b2dd82417" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #2864</h4>         <b>From:</b> 1 Ave & E 62 St<br>         <b>To:</b> 1 Ave & E 68 St<br>         <hr>         <b>Total Trips:</b> 457<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 2864 of 30     </div>     </div>`)[0];
+                popup_2aba468a5add3689452609531832ba42.setContent(html_ab3dbca0d601f9f381ca2d2b2dd82417);
+            
+        
+
+        poly_line_6f027015c842922c4b1d8f1a8eeac44f.bindPopup(popup_2aba468a5add3689452609531832ba42)
+        ;
+
+        
+    
+    
+            poly_line_6f027015c842922c4b1d8f1a8eeac44f.bindTooltip(
+                `<div>
+                     457 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_edd911f8e1bdd4172bbb652a85d07990 = L.polyline(
+                [[40.75724567911726, -73.97805914282799], [40.75640548, -73.9900262]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_027b09debd8dc8c7aa8d20855eb629a8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_32d9204add9ec36b987d7d033acea7e4 = $(`<div id="html_32d9204add9ec36b987d7d033acea7e4" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #177309</h4>         <b>From:</b> E 48 St & 5 Ave<br>         <b>To:</b> W 41 St & 8 Ave<br>         <hr>         <b>Total Trips:</b> 449<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 177309 of 30     </div>     </div>`)[0];
+                popup_027b09debd8dc8c7aa8d20855eb629a8.setContent(html_32d9204add9ec36b987d7d033acea7e4);
+            
+        
+
+        poly_line_edd911f8e1bdd4172bbb652a85d07990.bindPopup(popup_027b09debd8dc8c7aa8d20855eb629a8)
+        ;
+
+        
+    
+    
+            poly_line_edd911f8e1bdd4172bbb652a85d07990.bindTooltip(
+                `<div>
+                     449 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f9ea04fbe79b056ee8aa003ec21387dc = L.polyline(
+                [[40.74173969, -73.99415556], [40.7454973, -74.00197139]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_d5ddf1bf7d84f3ceac02e3ade809fec1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cabd137b367ee81e55550d9532cab94e = $(`<div id="html_cabd137b367ee81e55550d9532cab94e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #359297</h4>         <b>From:</b> W 21 St & 6 Ave<br>         <b>To:</b> 9 Ave & W 22 St<br>         <hr>         <b>Total Trips:</b> 414<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 359297 of 30     </div>     </div>`)[0];
+                popup_d5ddf1bf7d84f3ceac02e3ade809fec1.setContent(html_cabd137b367ee81e55550d9532cab94e);
+            
+        
+
+        poly_line_f9ea04fbe79b056ee8aa003ec21387dc.bindPopup(popup_d5ddf1bf7d84f3ceac02e3ade809fec1)
+        ;
+
+        
+    
+    
+            poly_line_f9ea04fbe79b056ee8aa003ec21387dc.bindTooltip(
+                `<div>
+                     414 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_21fce457fb1e710d546fe749e7a28359 = L.polyline(
+                [[40.75640548, -73.9900262], [40.75724567911726, -73.97805914282799]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_5bbe561016cb07cef92e884a5d191761 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5d839c12b200ab8b5343fcfe0645e0af = $(`<div id="html_5d839c12b200ab8b5343fcfe0645e0af" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #370191</h4>         <b>From:</b> W 41 St & 8 Ave<br>         <b>To:</b> E 48 St & 5 Ave<br>         <hr>         <b>Total Trips:</b> 389<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 370191 of 30     </div>     </div>`)[0];
+                popup_5bbe561016cb07cef92e884a5d191761.setContent(html_5d839c12b200ab8b5343fcfe0645e0af);
+            
+        
+
+        poly_line_21fce457fb1e710d546fe749e7a28359.bindPopup(popup_5bbe561016cb07cef92e884a5d191761)
+        ;
+
+        
+    
+    
+            poly_line_21fce457fb1e710d546fe749e7a28359.bindTooltip(
+                `<div>
+                     389 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b5d3779ed6f8ec0cee5f841aa1ad443f = L.polyline(
+                [[40.77095553869235, -73.95356208096926], [40.77314236, -73.95856158]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_9ae08b987041d54b2ec5b2e21068d619 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bbe0c6edd31adeb95f51ad87f65edf7e = $(`<div id="html_bbe0c6edd31adeb95f51ad87f65edf7e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #191563</h4>         <b>From:</b> E 77 St & 1 Ave<br>         <b>To:</b> E 77 St & 3 Ave<br>         <hr>         <b>Total Trips:</b> 372<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 191563 of 30     </div>     </div>`)[0];
+                popup_9ae08b987041d54b2ec5b2e21068d619.setContent(html_bbe0c6edd31adeb95f51ad87f65edf7e);
+            
+        
+
+        poly_line_b5d3779ed6f8ec0cee5f841aa1ad443f.bindPopup(popup_9ae08b987041d54b2ec5b2e21068d619)
+        ;
+
+        
+    
+    
+            poly_line_b5d3779ed6f8ec0cee5f841aa1ad443f.bindTooltip(
+                `<div>
+                     372 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c9b0e85c147dd2615e3b3e67ab836383 = L.polyline(
+                [[40.74232744, -73.95411749], [40.73564, -73.95866]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_961be0ab572d8d40be7568acb8bcfd2e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_92d96da48ea2d9eeb4c374b5218c10a0 = $(`<div id="html_92d96da48ea2d9eeb4c374b5218c10a0" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #345839</h4>         <b>From:</b> Vernon Blvd & 50 Ave<br>         <b>To:</b> Franklin St & Dupont St<br>         <hr>         <b>Total Trips:</b> 363<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 345839 of 30     </div>     </div>`)[0];
+                popup_961be0ab572d8d40be7568acb8bcfd2e.setContent(html_92d96da48ea2d9eeb4c374b5218c10a0);
+            
+        
+
+        poly_line_c9b0e85c147dd2615e3b3e67ab836383.bindPopup(popup_961be0ab572d8d40be7568acb8bcfd2e)
+        ;
+
+        
+    
+    
+            poly_line_c9b0e85c147dd2615e3b3e67ab836383.bindTooltip(
+                `<div>
+                     363 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ebd9370e34eccf7c1a74cf049308a77a = L.polyline(
+                [[40.714211, -73.981095], [40.7172274, -73.98802084]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_ba37cb4b49cb44bf7ea75eae90def01f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3bdafbace3f941c38f8041d2a962fbb7 = $(`<div id="html_3bdafbace3f941c38f8041d2a962fbb7" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #233796</h4>         <b>From:</b> Henry St & Grand St<br>         <b>To:</b> Norfolk St & Broome St<br>         <hr>         <b>Total Trips:</b> 354<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 233796 of 30     </div>     </div>`)[0];
+                popup_ba37cb4b49cb44bf7ea75eae90def01f.setContent(html_3bdafbace3f941c38f8041d2a962fbb7);
+            
+        
+
+        poly_line_ebd9370e34eccf7c1a74cf049308a77a.bindPopup(popup_ba37cb4b49cb44bf7ea75eae90def01f)
+        ;
+
+        
+    
+    
+            poly_line_ebd9370e34eccf7c1a74cf049308a77a.bindTooltip(
+                `<div>
+                     354 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9db7a45960c9bf841f32b7c8e490ea78 = L.polyline(
+                [[40.7172274, -73.98802084], [40.714211, -73.981095]],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#d7191c", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_87fb6623f51a82bdae48c6f2260e7473 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_68fb2ccf24a2b1aa0d26669cacf0a57f = $(`<div id="html_68fb2ccf24a2b1aa0d26669cacf0a57f" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #290389</h4>         <b>From:</b> Norfolk St & Broome St<br>         <b>To:</b> Henry St & Grand St<br>         <hr>         <b>Total Trips:</b> 342<br>         <b>Category:</b> Very Popular<br>         <b>Rank:</b> 290389 of 30     </div>     </div>`)[0];
+                popup_87fb6623f51a82bdae48c6f2260e7473.setContent(html_68fb2ccf24a2b1aa0d26669cacf0a57f);
+            
+        
+
+        poly_line_9db7a45960c9bf841f32b7c8e490ea78.bindPopup(popup_87fb6623f51a82bdae48c6f2260e7473)
+        ;
+
+        
+    
+    
+            poly_line_9db7a45960c9bf841f32b7c8e490ea78.bindTooltip(
+                `<div>
+                     342 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bcd76603ba7442d37c857424e3c84df1 = L.polyline(
+                [[40.77966809007312, -73.98093044757842], [40.7829391, -73.9786517]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_8c899d97274d046ffacdf0b5b8cb5b48 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_59b1aa24a72a7f8138ced0f5b820060f = $(`<div id="html_59b1aa24a72a7f8138ced0f5b820060f" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #73529</h4>         <b>From:</b> Amsterdam Ave & W 73 St<br>         <b>To:</b> Amsterdam Ave & W 79 St<br>         <hr>         <b>Total Trips:</b> 334<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 73529 of 30     </div>     </div>`)[0];
+                popup_8c899d97274d046ffacdf0b5b8cb5b48.setContent(html_59b1aa24a72a7f8138ced0f5b820060f);
+            
+        
+
+        poly_line_bcd76603ba7442d37c857424e3c84df1.bindPopup(popup_8c899d97274d046ffacdf0b5b8cb5b48)
+        ;
+
+        
+    
+    
+            poly_line_bcd76603ba7442d37c857424e3c84df1.bindTooltip(
+                `<div>
+                     334 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_46b2f7d5dcccc614342d06fde01cafc2 = L.polyline(
+                [[40.76663814, -73.95348296], [40.7687620293096, -73.95840793848038]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_80a83d128b69de107fde7347a72dca71 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_aad9c52c66869eee1e2b529bae54d8c5 = $(`<div id="html_aad9c52c66869eee1e2b529bae54d8c5" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #189705</h4>         <b>From:</b> E 72 St & York Ave<br>         <b>To:</b> 2 Ave & E 72 St<br>         <hr>         <b>Total Trips:</b> 319<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 189705 of 30     </div>     </div>`)[0];
+                popup_80a83d128b69de107fde7347a72dca71.setContent(html_aad9c52c66869eee1e2b529bae54d8c5);
+            
+        
+
+        poly_line_46b2f7d5dcccc614342d06fde01cafc2.bindPopup(popup_80a83d128b69de107fde7347a72dca71)
+        ;
+
+        
+    
+    
+            poly_line_46b2f7d5dcccc614342d06fde01cafc2.bindTooltip(
+                `<div>
+                     319 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8af07b48b1f1f277dbef3de852a96319 = L.polyline(
+                [[40.76030096, -73.99884222], [40.75516719072139, -74.00059908628464]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_29225b37ca2b5ebbfab41d0f0b9af9c5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bbe48b521851fc81ed7051182836ad71 = $(`<div id="html_bbe48b521851fc81ed7051182836ad71" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #8239</h4>         <b>From:</b> 11 Ave & W 41 St<br>         <b>To:</b> W 34 St & Hudson Blvd E<br>         <hr>         <b>Total Trips:</b> 317<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 8239 of 30     </div>     </div>`)[0];
+                popup_29225b37ca2b5ebbfab41d0f0b9af9c5.setContent(html_bbe48b521851fc81ed7051182836ad71);
+            
+        
+
+        poly_line_8af07b48b1f1f277dbef3de852a96319.bindPopup(popup_29225b37ca2b5ebbfab41d0f0b9af9c5)
+        ;
+
+        
+    
+    
+            poly_line_8af07b48b1f1f277dbef3de852a96319.bindTooltip(
+                `<div>
+                     317 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9400dc141495fdc260a7f3b482c133ec = L.polyline(
+                [[40.71291224, -74.01020234], [40.72019521437465, -74.0103006362915]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_40424588630ebf469e905053e35b7712 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_529872a7a1e21ed4e753b1f70a452bf1 = $(`<div id="html_529872a7a1e21ed4e753b1f70a452bf1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #79947</h4>         <b>From:</b> Barclay St & Church St<br>         <b>To:</b> North Moore St & Greenwich St<br>         <hr>         <b>Total Trips:</b> 311<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 79947 of 30     </div>     </div>`)[0];
+                popup_40424588630ebf469e905053e35b7712.setContent(html_529872a7a1e21ed4e753b1f70a452bf1);
+            
+        
+
+        poly_line_9400dc141495fdc260a7f3b482c133ec.bindPopup(popup_40424588630ebf469e905053e35b7712)
+        ;
+
+        
+    
+    
+            poly_line_9400dc141495fdc260a7f3b482c133ec.bindTooltip(
+                `<div>
+                     311 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_129972e792491969f1434e6af77c456d = L.polyline(
+                [[40.74173969, -73.99415556], [40.74691959, -74.00451887]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_98ea9d2560df99528e668942031f9dd8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f42b12696927940ddc631d77179e446b = $(`<div id="html_f42b12696927940ddc631d77179e446b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #359674</h4>         <b>From:</b> W 21 St & 6 Ave<br>         <b>To:</b> W 22 St & 10 Ave<br>         <hr>         <b>Total Trips:</b> 305<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 359674 of 30     </div>     </div>`)[0];
+                popup_98ea9d2560df99528e668942031f9dd8.setContent(html_f42b12696927940ddc631d77179e446b);
+            
+        
+
+        poly_line_129972e792491969f1434e6af77c456d.bindPopup(popup_98ea9d2560df99528e668942031f9dd8)
+        ;
+
+        
+    
+    
+            poly_line_129972e792491969f1434e6af77c456d.bindTooltip(
+                `<div>
+                     305 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c4402c4723b75949ae931935feb2ea32 = L.polyline(
+                [[40.74334935, -74.00681753], [40.740983, -74.001702]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_52f39bd38f6c87ca20d96f21855af5b5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_01280425a7dcfe6f4c0a1e8a05a7b5f1 = $(`<div id="html_01280425a7dcfe6f4c0a1e8a05a7b5f1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #354373</h4>         <b>From:</b> W 16 St & The High Line<br>         <b>To:</b> 8 Ave & W 16 St<br>         <hr>         <b>Total Trips:</b> 290<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 354373 of 30     </div>     </div>`)[0];
+                popup_52f39bd38f6c87ca20d96f21855af5b5.setContent(html_01280425a7dcfe6f4c0a1e8a05a7b5f1);
+            
+        
+
+        poly_line_c4402c4723b75949ae931935feb2ea32.bindPopup(popup_52f39bd38f6c87ca20d96f21855af5b5)
+        ;
+
+        
+    
+    
+            poly_line_c4402c4723b75949ae931935feb2ea32.bindTooltip(
+                `<div>
+                     290 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_06ca3a71b37c8ede3f8603d4e111f24f = L.polyline(
+                [[40.7829391, -73.9786517], [40.77966809007312, -73.98093044757842]],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fdae61", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_325bdd3ac0a0c7a3c453de98025350f1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ac1433bfab5768af6860c5a1d46c138d = $(`<div id="html_ac1433bfab5768af6860c5a1d46c138d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #73976</h4>         <b>From:</b> Amsterdam Ave & W 79 St<br>         <b>To:</b> Amsterdam Ave & W 73 St<br>         <hr>         <b>Total Trips:</b> 287<br>         <b>Category:</b> Popular<br>         <b>Rank:</b> 73976 of 30     </div>     </div>`)[0];
+                popup_325bdd3ac0a0c7a3c453de98025350f1.setContent(html_ac1433bfab5768af6860c5a1d46c138d);
+            
+        
+
+        poly_line_06ca3a71b37c8ede3f8603d4e111f24f.bindPopup(popup_325bdd3ac0a0c7a3c453de98025350f1)
+        ;
+
+        
+    
+    
+            poly_line_06ca3a71b37c8ede3f8603d4e111f24f.bindTooltip(
+                `<div>
+                     287 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_14bcfe5d9a0db0bf47e79b929df62729 = L.polyline(
+                [[40.745686, -74.005141], [40.74173969, -73.99415556]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_c22152a0f3abd6ac3220b00bd183727d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_879358129e4ce989cd1f3e24cebe9c66 = $(`<div id="html_879358129e4ce989cd1f3e24cebe9c66" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #357878</h4>         <b>From:</b> W 20 St & 10 Ave<br>         <b>To:</b> W 21 St & 6 Ave<br>         <hr>         <b>Total Trips:</b> 286<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 357878 of 30     </div>     </div>`)[0];
+                popup_c22152a0f3abd6ac3220b00bd183727d.setContent(html_879358129e4ce989cd1f3e24cebe9c66);
+            
+        
+
+        poly_line_14bcfe5d9a0db0bf47e79b929df62729.bindPopup(popup_c22152a0f3abd6ac3220b00bd183727d)
+        ;
+
+        
+    
+    
+            poly_line_14bcfe5d9a0db0bf47e79b929df62729.bindTooltip(
+                `<div>
+                     286 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_34b52acf67905c39e936c6b5e932b2b2 = L.polyline(
+                [[40.7457121, -73.98194829], [40.74322681432173, -73.97449783980846]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_21dd4bbdc956e5980d57571a7b3c8ed2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_17821a2434c7974ac0ef51c1f8df4af1 = $(`<div id="html_17821a2434c7974ac0ef51c1f8df4af1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #168781</h4>         <b>From:</b> E 32 St & Park Ave<br>         <b>To:</b> E 33 St & 1 Ave<br>         <hr>         <b>Total Trips:</b> 284<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 168781 of 30     </div>     </div>`)[0];
+                popup_21dd4bbdc956e5980d57571a7b3c8ed2.setContent(html_17821a2434c7974ac0ef51c1f8df4af1);
+            
+        
+
+        poly_line_34b52acf67905c39e936c6b5e932b2b2.bindPopup(popup_21dd4bbdc956e5980d57571a7b3c8ed2)
+        ;
+
+        
+    
+    
+            poly_line_34b52acf67905c39e936c6b5e932b2b2.bindTooltip(
+                `<div>
+                     284 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_01e243998d6cca59128152aacdd9cda9 = L.polyline(
+                [[40.77966809007312, -73.98093044757842], [40.78524672, -73.97667321]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_a6cc34574b8b7bfd90592301474ac726 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6a35db06663527cf17f9a9602b6eb489 = $(`<div id="html_6a35db06663527cf17f9a9602b6eb489" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #73530</h4>         <b>From:</b> Amsterdam Ave & W 73 St<br>         <b>To:</b> Amsterdam Ave & W 82 St<br>         <hr>         <b>Total Trips:</b> 277<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 73530 of 30     </div>     </div>`)[0];
+                popup_a6cc34574b8b7bfd90592301474ac726.setContent(html_6a35db06663527cf17f9a9602b6eb489);
+            
+        
+
+        poly_line_01e243998d6cca59128152aacdd9cda9.bindPopup(popup_a6cc34574b8b7bfd90592301474ac726)
+        ;
+
+        
+    
+    
+            poly_line_01e243998d6cca59128152aacdd9cda9.bindTooltip(
+                `<div>
+                     277 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8875a420b92279d06458a9803aff2a2d = L.polyline(
+                [[40.72019521437465, -74.0103006362915], [40.71291224, -74.01020234]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_73c4d9db93eb1a7fbb2970b77c8d7767 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7118622b3885aaac7acd77d99e96d593 = $(`<div id="html_7118622b3885aaac7acd77d99e96d593" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #291154</h4>         <b>From:</b> North Moore St & Greenwich St<br>         <b>To:</b> Barclay St & Church St<br>         <hr>         <b>Total Trips:</b> 277<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 291154 of 30     </div>     </div>`)[0];
+                popup_73c4d9db93eb1a7fbb2970b77c8d7767.setContent(html_7118622b3885aaac7acd77d99e96d593);
+            
+        
+
+        poly_line_8875a420b92279d06458a9803aff2a2d.bindPopup(popup_73c4d9db93eb1a7fbb2970b77c8d7767)
+        ;
+
+        
+    
+    
+            poly_line_8875a420b92279d06458a9803aff2a2d.bindTooltip(
+                `<div>
+                     277 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9a4b1ab53e9ef479e385be7cd7e35eeb = L.polyline(
+                [[40.71559509, -73.9870295], [40.714211, -73.981095]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_2a6c5f78af7ff2ea03feacf2290bc061 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_09d7536bfb43d83006f8a75d5f679e0d = $(`<div id="html_09d7536bfb43d83006f8a75d5f679e0d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #126442</h4>         <b>From:</b> Clinton St & Grand St<br>         <b>To:</b> Henry St & Grand St<br>         <hr>         <b>Total Trips:</b> 276<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 126442 of 30     </div>     </div>`)[0];
+                popup_2a6c5f78af7ff2ea03feacf2290bc061.setContent(html_09d7536bfb43d83006f8a75d5f679e0d);
+            
+        
+
+        poly_line_9a4b1ab53e9ef479e385be7cd7e35eeb.bindPopup(popup_2a6c5f78af7ff2ea03feacf2290bc061)
+        ;
+
+        
+    
+    
+            poly_line_9a4b1ab53e9ef479e385be7cd7e35eeb.bindTooltip(
+                `<div>
+                     276 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0546a9ebf77613cf6c31d1b08a4236c2 = L.polyline(
+                [[40.72746420692392, -73.97950418293476], [40.73031071000895, -73.98047178983688]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_e9375ed31e84468904c85797875a871f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d0bcf489f52b67bac0a3f5c7fba9f70b = $(`<div id="html_d0bcf489f52b67bac0a3f5c7fba9f70b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #148670</h4>         <b>From:</b> E 11 St & Ave B<br>         <b>To:</b> Ave A & E 14 St<br>         <hr>         <b>Total Trips:</b> 271<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 148670 of 30     </div>     </div>`)[0];
+                popup_e9375ed31e84468904c85797875a871f.setContent(html_d0bcf489f52b67bac0a3f5c7fba9f70b);
+            
+        
+
+        poly_line_0546a9ebf77613cf6c31d1b08a4236c2.bindPopup(popup_e9375ed31e84468904c85797875a871f)
+        ;
+
+        
+    
+    
+            poly_line_0546a9ebf77613cf6c31d1b08a4236c2.bindTooltip(
+                `<div>
+                     271 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_94dde617fb239c10c09320a85255b13c = L.polyline(
+                [[40.7639089, -73.9477213], [40.757284, -73.9536]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_19296a435cb84f67eea64a36c7f0be6c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_68e216e6b9049cea71e7a131492b87e6 = $(`<div id="html_68e216e6b9049cea71e7a131492b87e6" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #280989</h4>         <b>From:</b> Motorgate<br>         <b>To:</b> Roosevelt Island Tramway<br>         <hr>         <b>Total Trips:</b> 268<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 280989 of 30     </div>     </div>`)[0];
+                popup_19296a435cb84f67eea64a36c7f0be6c.setContent(html_68e216e6b9049cea71e7a131492b87e6);
+            
+        
+
+        poly_line_94dde617fb239c10c09320a85255b13c.bindPopup(popup_19296a435cb84f67eea64a36c7f0be6c)
+        ;
+
+        
+    
+    
+            poly_line_94dde617fb239c10c09320a85255b13c.bindTooltip(
+                `<div>
+                     268 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_cbedc24e2fc5c3ac2e6332c0806dd132 = L.polyline(
+                [[40.75516719072139, -74.00059908628464], [40.76030096, -73.99884222]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_371e15491dd49454739e7ab80d62dc80 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1061959a85cc3ba6cb6400a4cc6ead66 = $(`<div id="html_1061959a85cc3ba6cb6400a4cc6ead66" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #365985</h4>         <b>From:</b> W 34 St & Hudson Blvd E<br>         <b>To:</b> 11 Ave & W 41 St<br>         <hr>         <b>Total Trips:</b> 268<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 365985 of 30     </div>     </div>`)[0];
+                popup_371e15491dd49454739e7ab80d62dc80.setContent(html_1061959a85cc3ba6cb6400a4cc6ead66);
+            
+        
+
+        poly_line_cbedc24e2fc5c3ac2e6332c0806dd132.bindPopup(popup_371e15491dd49454739e7ab80d62dc80)
+        ;
+
+        
+    
+    
+            poly_line_cbedc24e2fc5c3ac2e6332c0806dd132.bindTooltip(
+                `<div>
+                     268 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_abcbe715378b3e118f36e60d63283206 = L.polyline(
+                [[40.74173969, -73.99415556], [40.745686, -74.005141]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_fc8ee30e2b648249ea23c2ea33a723bb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_442bf138f987fcd41d641828830f25ca = $(`<div id="html_442bf138f987fcd41d641828830f25ca" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #359669</h4>         <b>From:</b> W 21 St & 6 Ave<br>         <b>To:</b> W 20 St & 10 Ave<br>         <hr>         <b>Total Trips:</b> 267<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 359669 of 30     </div>     </div>`)[0];
+                popup_fc8ee30e2b648249ea23c2ea33a723bb.setContent(html_442bf138f987fcd41d641828830f25ca);
+            
+        
+
+        poly_line_abcbe715378b3e118f36e60d63283206.bindPopup(popup_fc8ee30e2b648249ea23c2ea33a723bb)
+        ;
+
+        
+    
+    
+            poly_line_abcbe715378b3e118f36e60d63283206.bindTooltip(
+                `<div>
+                     267 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a64fe532800d90ee44443b2a04152840 = L.polyline(
+                [[40.72019521437465, -74.0103006362915], [40.7153379, -74.01658354]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_51715a8c275d008385a2964b9bb1cc42 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9e41e469de5f6700d45096f94e992e49 = $(`<div id="html_9e41e469de5f6700d45096f94e992e49" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #291389</h4>         <b>From:</b> North Moore St & Greenwich St<br>         <b>To:</b> Vesey Pl & River Terrace<br>         <hr>         <b>Total Trips:</b> 266<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 291389 of 30     </div>     </div>`)[0];
+                popup_51715a8c275d008385a2964b9bb1cc42.setContent(html_9e41e469de5f6700d45096f94e992e49);
+            
+        
+
+        poly_line_a64fe532800d90ee44443b2a04152840.bindPopup(popup_51715a8c275d008385a2964b9bb1cc42)
+        ;
+
+        
+    
+    
+            poly_line_a64fe532800d90ee44443b2a04152840.bindTooltip(
+                `<div>
+                     266 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8d0743ce67d2a0aaeb8b7d242af2cceb = L.polyline(
+                [[40.72621788, -73.98379855], [40.73031071000895, -73.98047178983688]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_0bb294693beaeec0cef2e9b9439cf06b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_464dbb5016623faeae5ade4afaaface2 = $(`<div id="html_464dbb5016623faeae5ade4afaaface2" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #188140</h4>         <b>From:</b> E 7 St & Ave A<br>         <b>To:</b> Ave A & E 14 St<br>         <hr>         <b>Total Trips:</b> 265<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 188140 of 30     </div>     </div>`)[0];
+                popup_0bb294693beaeec0cef2e9b9439cf06b.setContent(html_464dbb5016623faeae5ade4afaaface2);
+            
+        
+
+        poly_line_8d0743ce67d2a0aaeb8b7d242af2cceb.bindPopup(popup_0bb294693beaeec0cef2e9b9439cf06b)
+        ;
+
+        
+    
+    
+            poly_line_8d0743ce67d2a0aaeb8b7d242af2cceb.bindTooltip(
+                `<div>
+                     265 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d63f8603b848a4cfe1e80f5792eef758 = L.polyline(
+                [[40.740288, -73.960697], [40.74232744, -73.95411749]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_e77528360a6f30598d970ac53d938bf1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cac99d45bad64271370678a118798107 = $(`<div id="html_cac99d45bad64271370678a118798107" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #46676</h4>         <b>From:</b> 55 Ave & Center Blvd<br>         <b>To:</b> Vernon Blvd & 50 Ave<br>         <hr>         <b>Total Trips:</b> 264<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 46676 of 30     </div>     </div>`)[0];
+                popup_e77528360a6f30598d970ac53d938bf1.setContent(html_cac99d45bad64271370678a118798107);
+            
+        
+
+        poly_line_d63f8603b848a4cfe1e80f5792eef758.bindPopup(popup_e77528360a6f30598d970ac53d938bf1)
+        ;
+
+        
+    
+    
+            poly_line_d63f8603b848a4cfe1e80f5792eef758.bindTooltip(
+                `<div>
+                     264 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c3de569d07a2591d45d90881f7a1794e = L.polyline(
+                [[40.76712840349542, -73.96224617958069], [40.76500525, -73.95818491]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_c13ca640bb6e576a3c2f5524414e0ca1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8da9c911f5789e834e9e1a9c02c55c90 = $(`<div id="html_8da9c911f5789e834e9e1a9c02c55c90" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #187376</h4>         <b>From:</b> E 68 St & 3 Ave<br>         <b>To:</b> 1 Ave & E 68 St<br>         <hr>         <b>Total Trips:</b> 264<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 187376 of 30     </div>     </div>`)[0];
+                popup_c13ca640bb6e576a3c2f5524414e0ca1.setContent(html_8da9c911f5789e834e9e1a9c02c55c90);
+            
+        
+
+        poly_line_c3de569d07a2591d45d90881f7a1794e.bindPopup(popup_c13ca640bb6e576a3c2f5524414e0ca1)
+        ;
+
+        
+    
+    
+            poly_line_c3de569d07a2591d45d90881f7a1794e.bindTooltip(
+                `<div>
+                     264 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7bf2de60fff1f47755496784fb753159 = L.polyline(
+                [[40.73031071000895, -73.98047178983688], [40.72746420692392, -73.97950418293476]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_a3e4b9adb7016dec4a01dc80a59dac56 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_799c18bd5f7b3fd94af9a649f309117d = $(`<div id="html_799c18bd5f7b3fd94af9a649f309117d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #77120</h4>         <b>From:</b> Ave A & E 14 St<br>         <b>To:</b> E 11 St & Ave B<br>         <hr>         <b>Total Trips:</b> 261<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 77120 of 30     </div>     </div>`)[0];
+                popup_a3e4b9adb7016dec4a01dc80a59dac56.setContent(html_799c18bd5f7b3fd94af9a649f309117d);
+            
+        
+
+        poly_line_7bf2de60fff1f47755496784fb753159.bindPopup(popup_a3e4b9adb7016dec4a01dc80a59dac56)
+        ;
+
+        
+    
+    
+            poly_line_7bf2de60fff1f47755496784fb753159.bindTooltip(
+                `<div>
+                     261 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_78ae215d68a00b389d6e2196ca3b6da3 = L.polyline(
+                [[40.71893904, -73.99266288], [40.719383, -73.991479]],
+                {"bubblingMouseEvents": true, "color": "#abd9e9", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#abd9e9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_7a79c37671fbc1b6810a1d7967934a51 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d7f3872432be2c73f376ba5170864f2d = $(`<div id="html_d7f3872432be2c73f376ba5170864f2d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 250px;">         <h4>Route #206999</h4>         <b>From:</b> Forsyth St & Broome St<br>         <b>To:</b> Delancey St & Eldridge St<br>         <hr>         <b>Total Trips:</b> 260<br>         <b>Category:</b> Moderate<br>         <b>Rank:</b> 206999 of 30     </div>     </div>`)[0];
+                popup_7a79c37671fbc1b6810a1d7967934a51.setContent(html_d7f3872432be2c73f376ba5170864f2d);
+            
+        
+
+        poly_line_78ae215d68a00b389d6e2196ca3b6da3.bindPopup(popup_7a79c37671fbc1b6810a1d7967934a51)
+        ;
+
+        
+    
+    
+            poly_line_78ae215d68a00b389d6e2196ca3b6da3.bindTooltip(
+                `<div>
+                     260 trips
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_79cacc30c6f94b313bb2c4fdf6b78fff = L.circleMarker(
+                [40.7612274, -73.96094022],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "lightgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_a227b02bcb3982fcf78ad328c1114fb7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e69de7b0de1c7895aea97a2d94cd008c = $(`<div id="html_e69de7b0de1c7895aea97a2d94cd008c" style="width: 100.0%; height: 100.0%;">START: 1 Ave & E 62 St</div>`)[0];
+                popup_a227b02bcb3982fcf78ad328c1114fb7.setContent(html_e69de7b0de1c7895aea97a2d94cd008c);
+            
+        
+
+        circle_marker_79cacc30c6f94b313bb2c4fdf6b78fff.bindPopup(popup_a227b02bcb3982fcf78ad328c1114fb7)
+        ;
+
+        
+    
+    
+            var circle_marker_0205487f4daf520d7a9f5eca6949d042 = L.circleMarker(
+                [40.76500525, -73.95818491],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_626ae5a4a2c5d9cab7c307fa8332a6f5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0400ba1f0de5a3df90a3a32e7de235fb = $(`<div id="html_0400ba1f0de5a3df90a3a32e7de235fb" style="width: 100.0%; height: 100.0%;">END: 1 Ave & E 68 St</div>`)[0];
+                popup_626ae5a4a2c5d9cab7c307fa8332a6f5.setContent(html_0400ba1f0de5a3df90a3a32e7de235fb);
+            
+        
+
+        circle_marker_0205487f4daf520d7a9f5eca6949d042.bindPopup(popup_626ae5a4a2c5d9cab7c307fa8332a6f5)
+        ;
+
+        
+    
+    
+            var circle_marker_e54f7c92a23661399a26c1b50a5eaa2d = L.circleMarker(
+                [40.75724567911726, -73.97805914282799],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "lightgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_b49fc5811cd65b4c7719e810a3a0e9a0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_021a0bc15fd15ac2d81d388682a51911 = $(`<div id="html_021a0bc15fd15ac2d81d388682a51911" style="width: 100.0%; height: 100.0%;">START: E 48 St & 5 Ave</div>`)[0];
+                popup_b49fc5811cd65b4c7719e810a3a0e9a0.setContent(html_021a0bc15fd15ac2d81d388682a51911);
+            
+        
+
+        circle_marker_e54f7c92a23661399a26c1b50a5eaa2d.bindPopup(popup_b49fc5811cd65b4c7719e810a3a0e9a0)
+        ;
+
+        
+    
+    
+            var circle_marker_09163a55de9129c0550ef56345f50b12 = L.circleMarker(
+                [40.75640548, -73.9900262],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_4cf5ba38e676d1d953727d9ce010bc78 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_08bbe4313e92dba58f01730d589ef777 = $(`<div id="html_08bbe4313e92dba58f01730d589ef777" style="width: 100.0%; height: 100.0%;">END: W 41 St & 8 Ave</div>`)[0];
+                popup_4cf5ba38e676d1d953727d9ce010bc78.setContent(html_08bbe4313e92dba58f01730d589ef777);
+            
+        
+
+        circle_marker_09163a55de9129c0550ef56345f50b12.bindPopup(popup_4cf5ba38e676d1d953727d9ce010bc78)
+        ;
+
+        
+    
+    
+            var circle_marker_4d9234a7ab9e6c0e67cd417e5d766c64 = L.circleMarker(
+                [40.74173969, -73.99415556],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "lightgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_d6e72e7794365a6a548282121e7466b4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_13d30681bc078dd455dfa3a655f1fe5d = $(`<div id="html_13d30681bc078dd455dfa3a655f1fe5d" style="width: 100.0%; height: 100.0%;">START: W 21 St & 6 Ave</div>`)[0];
+                popup_d6e72e7794365a6a548282121e7466b4.setContent(html_13d30681bc078dd455dfa3a655f1fe5d);
+            
+        
+
+        circle_marker_4d9234a7ab9e6c0e67cd417e5d766c64.bindPopup(popup_d6e72e7794365a6a548282121e7466b4)
+        ;
+
+        
+    
+    
+            var circle_marker_6494aa0c2f7323a54399804e19b42c79 = L.circleMarker(
+                [40.7454973, -74.00197139],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_2ddc8c976cd6783a2091da15c5dc7ca2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e1370b621e87cf4ceca049af0e3811ac = $(`<div id="html_e1370b621e87cf4ceca049af0e3811ac" style="width: 100.0%; height: 100.0%;">END: 9 Ave & W 22 St</div>`)[0];
+                popup_2ddc8c976cd6783a2091da15c5dc7ca2.setContent(html_e1370b621e87cf4ceca049af0e3811ac);
+            
+        
+
+        circle_marker_6494aa0c2f7323a54399804e19b42c79.bindPopup(popup_2ddc8c976cd6783a2091da15c5dc7ca2)
+        ;
+
+        
+    
+    
+            var circle_marker_9295a91a07b282cb2f57c176c32d86cd = L.circleMarker(
+                [40.75640548, -73.9900262],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "lightgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_4919e8720ea471ffbe55730c6aa952e3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a4fa8990ea5fa097341bc681ea648fd0 = $(`<div id="html_a4fa8990ea5fa097341bc681ea648fd0" style="width: 100.0%; height: 100.0%;">START: W 41 St & 8 Ave</div>`)[0];
+                popup_4919e8720ea471ffbe55730c6aa952e3.setContent(html_a4fa8990ea5fa097341bc681ea648fd0);
+            
+        
+
+        circle_marker_9295a91a07b282cb2f57c176c32d86cd.bindPopup(popup_4919e8720ea471ffbe55730c6aa952e3)
+        ;
+
+        
+    
+    
+            var circle_marker_c9e2bb144395eb4ee2be1afd0dfed826 = L.circleMarker(
+                [40.75724567911726, -73.97805914282799],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_7ea17520c1ea62c35b3110e79534181b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_86ab88a8e035d6c996551e8eb840b466 = $(`<div id="html_86ab88a8e035d6c996551e8eb840b466" style="width: 100.0%; height: 100.0%;">END: E 48 St & 5 Ave</div>`)[0];
+                popup_7ea17520c1ea62c35b3110e79534181b.setContent(html_86ab88a8e035d6c996551e8eb840b466);
+            
+        
+
+        circle_marker_c9e2bb144395eb4ee2be1afd0dfed826.bindPopup(popup_7ea17520c1ea62c35b3110e79534181b)
+        ;
+
+        
+    
+    
+            var circle_marker_cf746b6b2031dabe3f527c6acde519f2 = L.circleMarker(
+                [40.77095553869235, -73.95356208096926],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "lightgreen", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_2114e93992f6cb83c22af252eed2fb63 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3397367bb97d6cdcc243df9e1722d017 = $(`<div id="html_3397367bb97d6cdcc243df9e1722d017" style="width: 100.0%; height: 100.0%;">START: E 77 St & 1 Ave</div>`)[0];
+                popup_2114e93992f6cb83c22af252eed2fb63.setContent(html_3397367bb97d6cdcc243df9e1722d017);
+            
+        
+
+        circle_marker_cf746b6b2031dabe3f527c6acde519f2.bindPopup(popup_2114e93992f6cb83c22af252eed2fb63)
+        ;
+
+        
+    
+    
+            var circle_marker_4dd7e28094fb354d1d359d9b1142a93e = L.circleMarker(
+                [40.77314236, -73.95856158],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a3ab794bece454abdde469bff6f2d8c3);
+        
+    
+        var popup_7606eac41f1b5f233bfdd4996b5f0966 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c13e4bc7baab74d58478c8827f26b7f6 = $(`<div id="html_c13e4bc7baab74d58478c8827f26b7f6" style="width: 100.0%; height: 100.0%;">END: E 77 St & 3 Ave</div>`)[0];
+                popup_7606eac41f1b5f233bfdd4996b5f0966.setContent(html_c13e4bc7baab74d58478c8827f26b7f6);
+            
+        
+
+        circle_marker_4dd7e28094fb354d1d359d9b1142a93e.bindPopup(popup_7606eac41f1b5f233bfdd4996b5f0966)
+        ;
+
+        
+    
+</script>
+</html>

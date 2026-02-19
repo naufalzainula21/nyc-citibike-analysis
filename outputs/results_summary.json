@@ -1,0 +1,8 @@
+{
+  "total_trips": 2118148,
+  "avg_duration": 10.765344717145984,
+  "median_duration": 7.942975,
+  "top_station": "W 21 St & 6 Ave",
+  "peak_hour": 17,
+  "r2_score": 0.03244279677555262
+}

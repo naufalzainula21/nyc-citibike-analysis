@@ -1,0 +1,28 @@
+# Data files (too large for GitHub)
+*.csv
+*.xlsx
+202402-citibike-tripdata/
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Other
+Untitled.ipynb
