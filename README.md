@@ -116,17 +116,6 @@ python src/geospatial_analysis.py
 jupyter notebook notebooks/
 ```
 
-## 📊 Sample Visualizations
-
-### Trip Duration Distribution
-![Trip Duration Distribution](figures/duration_distribution.png)
-
-### Station Activity Heatmap
-![Station Heatmap](figures/station_heatmap.png)
-
-### Hourly Usage Patterns
-![Hourly Patterns](figures/hourly_patterns.png)
-
 ## 💡 Urban Planning Insights
 
 1. **Infrastructure Planning:** High-demand stations need capacity expansion
